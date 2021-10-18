@@ -1,13 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 
-class MenuComp extends Component {
-  render() {
-    return (
-      <div>
-        <Fragment>Menu</Fragment>
-      </div>
-    );
-  }
+function MenuComp(props) {
+  return (
+    <div>
+      <Fragment>Menu</Fragment>
+    </div>
+  );
 }
 
 export default MenuComp;

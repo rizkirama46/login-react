@@ -1,13 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 
-class RegisterComp extends Component {
-  render() {
-    return (
-      <div>
-        <Fragment>Register</Fragment>
-      </div>
-    );
-  }
+function RegisterComp(props) {
+  return (
+    <div>
+      <Fragment>Register</Fragment>
+    </div>
+  );
 }
 
 export default RegisterComp;

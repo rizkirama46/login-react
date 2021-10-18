@@ -1,13 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 
-class HomeComp extends Component {
-  render() {
-    return (
-      <div>
-        <Fragment>Home</Fragment>
-      </div>
-    );
-  }
+function HomeComp(props) {
+  return (
+    <div>
+      <Fragment>Home</Fragment>
+    </div>
+  );
 }
 
 export default HomeComp;
