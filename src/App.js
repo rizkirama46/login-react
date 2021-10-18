@@ -1,5 +1,6 @@
 import React, { createContext, useReducer } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import HomeComp from "./component/HomeComp";
 import LoginComp from "./component/LoginComp";
 import MenuComp from "./component/MenuComp";
@@ -28,8 +29,9 @@ const reducer = (state, action) => {
     case "LOGOUT":
       localStorage.clear()
       return {
-        isAuthenticated: true,
-        user: action.payload.user
+        ...state,
+        isAuthenticated: false,
+        user: null
       }
     default:
       return state
@@ -44,7 +46,7 @@ function App() {
       <Switch>
         <AuthContext.Provider value={{state, dispatch}}>
           <MenuComp />
-          {!state.isAuthenticated ? <Redirect to={{pathname: '/'}} /> : <Redirect to={{pathname: '/'}} />}
+          {!state.isAuthenticated ? <Redirect to={{pathname: '/'}} /> : <Redirect to={{pathname: '/homepage'}} />}
           <Route exact path="/" component={LoginComp} />
           <Route exact path="/homepage" component={HomeComp} />
           <Route exact path="/register" component={RegisterComp} />
