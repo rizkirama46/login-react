@@ -1,10 +1,12 @@
 import React, { createContext, useReducer } from "react";
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HomeComp from "./component/HomeComp";
 import LoginComp from "./component/LoginComp";
 import MenuComp from "./component/MenuComp";
 import RegisterComp from "./component/RegisterComp";
+import Publik from "./component/Publik";
+import Transaksi from "./component/Transaksi";
 
 //Context
 export const AuthContext = createContext()
@@ -46,10 +48,11 @@ function App() {
       <Switch>
         <AuthContext.Provider value={{state, dispatch}}>
           <MenuComp />
-          {!state.isAuthenticated ? <Redirect to={{pathname: '/'}} /> : <Redirect to={{pathname: '/homepage'}} />}
-          <Route exact path="/" component={LoginComp} />
-          <Route exact path="/homepage" component={HomeComp} />
+          <Route exact path="/" component={Publik} />
+          <Route exact path="/login" component={LoginComp} />
+          <Route exact path="/dashboard" component={HomeComp} />
           <Route exact path="/register" component={RegisterComp} />
+          <Route exact path="/transaksi" component={Transaksi} />
         </AuthContext.Provider>
       </Switch>
    </BrowserRouter>

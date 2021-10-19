@@ -52,6 +52,9 @@ function LoginComp(props) {
             type: "LOGIN",
             payload: res.data
           })
+
+          // redirect ke dashboard
+          props.history.push('/dashboard')
         } else {
           setData({
             ...data,
