@@ -52,6 +52,9 @@ function MenuComp(props) {
               <NavItem>
                 <NavLink to='/transaksi' className="nav-link">TRANSAKSI</NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink to='/mahasiswa' className="nav-link">MAHASISWA</NavLink>
+              </NavItem>
             </Nav>
             <NavbarText>
               <Button color="success" onClick={()=> dispatch({type:"LOGOUT"})}>

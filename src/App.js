@@ -7,6 +7,7 @@ import MenuComp from "./component/MenuComp";
 import RegisterComp from "./component/RegisterComp";
 import Publik from "./component/Publik";
 import Transaksi from "./component/Transaksi";
+import ListMahasiswa from "./component/ListMahasiswa";
 
 //Context
 export const AuthContext = createContext()
@@ -53,6 +54,7 @@ function App() {
           <Route exact path="/dashboard" component={HomeComp} />
           <Route exact path="/register" component={RegisterComp} />
           <Route exact path="/transaksi" component={Transaksi} />
+          <Route exact path="/mahasiswa" component={ListMahasiswa} />
         </AuthContext.Provider>
       </Switch>
    </BrowserRouter>
