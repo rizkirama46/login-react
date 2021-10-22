@@ -8,7 +8,7 @@ const api = 'http://localhost:3001'
 
 function ListMahasiswa(props) {
   const [mahasiswa, setMahasiswa] = useState([])
-  const { state } = useContext(AuthContext)
+  const { state, dispatch } = useContext(AuthContext)
 
   const fetchData = () => {
     const config = {
@@ -27,9 +27,17 @@ function ListMahasiswa(props) {
       })
   }
 
+  const timeout = () => {
+    setTimeout(()=> {
+      console.log("token telah berakhir");
+      dispatch({type: "LOGOUT"})
+    }, state.tokenExpires)
+  }
+
   useEffect(() => {
     fetchData()
     // eslint-disable-next-line
+    timeout()
   }, [])
 
   if(!state.isAuthenticated) {
