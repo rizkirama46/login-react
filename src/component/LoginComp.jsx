@@ -2,6 +2,7 @@ import React, { Fragment, useContext, useState } from 'react';
 import { Container, Row, Col, Button, Form, FormGroup, Label, Input, Alert, CardImg } from 'reactstrap';
 import { AuthContext } from '../App';
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 const qs = require('querystring')
 const api = 'http://localhost:3001'
@@ -13,14 +14,18 @@ function LoginComp(props) {
   const {dispatch} = useContext(AuthContext)
 
   const initialState = {
-    email: "",
-    password: "",
     isSubmitting: false,
     errorMsg: null,
-    isVerifeid: false
+    isVerified: false
+  }
+
+  const stateForm = {
+    email: "",
+    password: ""
   }
 
   const [data, setData] = useState(initialState)
+  const [dataForm, setDataForm] = useState(stateForm)
 
   // specifying your onload callback function
   var callback = function () {
@@ -32,14 +37,14 @@ function LoginComp(props) {
     console.log(response);
     if(response) {
       setData({
-        isVerifeid: true
+        isVerified: true
       })
     }
   };
 
   const handleInputChange = event => {
-    setData({
-      ...data,
+    setDataForm({
+      ...dataForm,
       [event.target.name] : event.target.value
     })
   }
@@ -47,7 +52,7 @@ function LoginComp(props) {
   const handleFormSubmit = event => {
     event.preventDefault()
 
-    if(data.isVerifeid) {
+    if(data.isVerified) {
       setData({
         ...data,
         isSubmitting: true,
@@ -55,8 +60,8 @@ function LoginComp(props) {
       })
   
       const reqBody = {
-        email: data.email,
-        password: data.password
+        email: dataForm.email,
+        password: dataForm.password
       }
   
       const config = {
@@ -67,7 +72,7 @@ function LoginComp(props) {
   
       axios.post(api + '/auth/api/v1/login', qs.stringify(reqBody), config)
         .then(res => {
-          if(res.data.success === true) {
+          if(res.data.success === true && res.data.isVerified === 1) {
             dispatch({
               type: "LOGIN",
               payload: res.data
@@ -75,6 +80,12 @@ function LoginComp(props) {
   
             // redirect ke dashboard
             props.history.push('/dashboard')
+          } else if(res.data.success === true && res.data.isVerified === 0){
+            setData({
+              ...data,
+              isSubmitting: false,
+              errorMsg: "Email anda belum terverifikasi, silahkan check email!"
+            })
           } else {
             setData({
               ...data,
@@ -107,11 +118,11 @@ function LoginComp(props) {
               <Form onSubmit={handleFormSubmit}>
                 <FormGroup>
                   <Label for="exampleEmail">Email</Label>
-                  <Input type="email" name="email" id="exampleEmail" value={data.email} onChange={handleInputChange} placeholder="with a placeholder" />
+                  <Input type="email" name="email" id="exampleEmail" value={dataForm.email} onChange={handleInputChange} placeholder="with a placeholder" />
                 </FormGroup>
                 <FormGroup>
                   <Label for="examplePassword">Password</Label>
-                  <Input type="password" name="password" id="examplePassword" value={data.password} onChange={handleInputChange} placeholder="password placeholder" />
+                  <Input type="password" name="password" id="examplePassword" value={dataForm.password} onChange={handleInputChange} placeholder="password placeholder" />
                 </FormGroup>
 
                 <Recaptcha
@@ -127,6 +138,7 @@ function LoginComp(props) {
                   {data.isSubmitting ? "...loading" : "Login"}
                 </Button>
               </Form>
+              <p>Belum punya akun? <Link to="/register">Register</Link></p>
             </Col>
           </Row>
         </Container>
